@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Postcard 🎉</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #2B1810;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+            transition: background 1s ease-out;
+        }
+
+        /* Candlelight glow effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(ellipse at center, rgba(255, 180, 100, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            animation: candleGlow 3s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes candleGlow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 0.9; }
+        }
+
+        /* Darken after candle is blown */
+        body.blown {
+            background: #1a1a1a;
+        }
+
+        body.blown::before {
+            animation: fadeOut 1s forwards;
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+
+        /* Countdown */
+        .countdown {
+            position: fixed;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5em;
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            z-index: 100;
+            animation: pulse 1s ease-in-out infinite;
+            opacity: 1;
+        }
+
+        .countdown.hidden {
+            animation: fadeOutCount 0.5s forwards;
+        }
+
+        @keyframes fadeOutCount {
+            to { opacity: 0; transform: translateX(-50%) scale(1.5); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        /* Background Gentle Confetti */
+        .bg-confetti {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: gentleConfettiFall 8s linear infinite;
+        }
+
+        @keyframes gentleConfettiFall {
+            0% { 
+                top: -5%;
+                transform: translateX(0) rotate(0deg);
+            }
+            100% { 
+                top: 105%;
+                transform: translateX(var(--drift)) rotate(360deg);
+            }
+        }
+
+        .bg-confetti:nth-child(1) { left: 5%; background: #FFB6C1; --drift: 20px; animation-delay: 0s; }
+        .bg-confetti:nth-child(2) { left: 15%; background: #87CEEB; --drift: -15px; animation-delay: 1s; }
+        .bg-confetti:nth-child(3) { left: 25%; background: #FFD700; --drift: 25px; animation-delay: 2s; }
+        .bg-confetti:nth-child(4) { left: 35%; background: #98FB98; --drift: -20px; animation-delay: 0.5s; }
+        .bg-confetti:nth-child(5) { left: 45%; background: #FFA07A; --drift: 15px; animation-delay: 1.5s; }
+        .bg-confetti:nth-child(6) { left: 55%; background: #DDA0DD; --drift: -25px; animation-delay: 2.5s; }
+        .bg-confetti:nth-child(7) { left: 65%; background: #F0E68C; --drift: 20px; animation-delay: 0.8s; }
+        .bg-confetti:nth-child(8) { left: 75%; background: #B0E0E6; --drift: -15px; animation-delay: 1.8s; }
+        .bg-confetti:nth-child(9) { left: 85%; background: #FFDAB9; --drift: 25px; animation-delay: 0.3s; }
+        .bg-confetti:nth-child(10) { left: 95%; background: #E6E6FA; --drift: -20px; animation-delay: 2.2s; }
+
+        /* Floating Gift Boxes */
+        .gift-box {
+            position: fixed;
+            font-size: 30px;
+            opacity: 0.5;
+            animation: floatGift 12s ease-in-out infinite;
+        }
+
+        @keyframes floatGift {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg);
+            }
+            50% { 
+                transform: translateY(-30px) rotate(10deg);
+            }
+        }
+
+        .gift-box:nth-child(1) { left: 8%; top: 20%; animation-delay: 0s; animation-duration: 10s; }
+        .gift-box:nth-child(2) { left: 88%; top: 30%; animation-delay: 2s; animation-duration: 12s; }
+        .gift-box:nth-child(3) { left: 12%; top: 70%; animation-delay: 1s; animation-duration: 11s; }
+        .gift-box:nth-child(4) { left: 85%; top: 75%; animation-delay: 3s; animation-duration: 13s; }
+
+        /* Party String Lights */
+        .string-lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .light {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: twinkleLight 2s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes twinkleLight {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(1);
+                box-shadow: 0 0 5px currentColor;
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.2);
+                box-shadow: 0 0 15px currentColor;
+            }
+        }
+
+        .light:nth-child(1) { top: 5%; left: 10%; background: #FF6B6B; animation-delay: 0s; }
+        .light:nth-child(2) { top: 5%; left: 25%; background: #4ECDC4; animation-delay: 0.3s; }
+        .light:nth-child(3) { top: 5%; left: 40%; background: #FFE66D; animation-delay: 0.6s; }
+        .light:nth-child(4) { top: 5%; left: 55%; background: #95E1D3; animation-delay: 0.9s; }
+        .light:nth-child(5) { top: 5%; left: 70%; background: #F38181; animation-delay: 1.2s; }
+        .light:nth-child(6) { top: 5%; left: 85%; background: #AA96DA; animation-delay: 0.2s; }
+
+        .light:nth-child(7) { bottom: 5%; left: 10%; background: #A8D8EA; animation-delay: 0.4s; }
+        .light:nth-child(8) { bottom: 5%; left: 25%; background: #FFAAA5; animation-delay: 0.7s; }
+        .light:nth-child(9) { bottom: 5%; left: 40%; background: #B4F8C8; animation-delay: 1s; }
+        .light:nth-child(10) { bottom: 5%; left: 55%; background: #FBE7C6; animation-delay: 1.3s; }
+        .light:nth-child(11) { bottom: 5%; left: 70%; background: #C7CEEA; animation-delay: 0.1s; }
+        .light:nth-child(12) { bottom: 5%; left: 85%; background: #FF9AA2; animation-delay: 0.4s; }
+
+        .postcard-wrapper {
+            perspective: 2000px;
+            perspective-origin: center center;
+            width: 100%;
+            max-width: 700px;
+            aspect-ratio: 3/2;
+            max-height: 90vh;
+            z-index: 10;
+        }
+
+        .postcard-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transform-origin: center center;
+        }
+
+        .postcard-container.flip {
+            animation: flipCard 1s ease-in-out forwards;
+        }
+
+        @keyframes flipCard {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(180deg); }
+        }
+
+        .postcard-side {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 8px;
+            box-shadow: 0 15px 40px rgba(255, 150, 50, 0.3);
+            overflow: hidden;
+        }
+
+        /* FRONT SIDE - Candle */
+        .postcard-front {
+            background: linear-gradient(to top, #F5E6D3 0%, #FFE5B4 30%, #FFD4A0 50%, #4A3728 100%);
+            position: relative;
+            transform: rotateY(0deg);
+        }
+
+        /* Candle Flame */
+        .flame {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 90px;
+            background: radial-gradient(ellipse at center bottom, 
+                #FFFF00 0%, 
+                #FFD700 25%, 
+                #FFA500 50%, 
+                #FF6347 75%, 
+                transparent 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            filter: blur(2px);
+            animation: flicker 0.3s ease-in-out infinite alternate, flameRise 2s ease-out;
+            box-shadow: 
+                0 0 20px #FFD700,
+                0 0 40px #FFA500,
+                0 0 60px #FF6347;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1, 1.05) translateY(0); }
+            100% { transform: translateX(-50%) scale(0.95, 1) translateY(-3px); }
+        }
+
+        @keyframes flameRise {
+            from { top: 30%; opacity: 0; }
+            to { top: 15%; opacity: 1; }
+        }
+
+        /* Inner flame glow */
+        .flame::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 50px;
+            background: radial-gradient(ellipse at center, 
+                #FFFFFF 0%, 
+                #FFFF99 40%, 
+                transparent 70%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+
+        /* Flame reflection on wax */
+        .flame-reflection {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 80px;
+            background: radial-gradient(ellipse at center, 
+                rgba(255, 215, 0, 0.3) 0%, 
+                transparent 70%);
+            filter: blur(15px);
+            animation: flameReflectionFlicker 0.3s ease-in-out infinite alternate;
+        }
+
+        @keyframes flameReflectionFlicker {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.6; }
+        }
+
+        /* Candle Wax (snow field) */
+        .wax-field {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 48%;
+            background: linear-gradient(to bottom, 
+                #FFFAF0 0%, 
+                #FFF8E7 20%,
+                #FFEFD5 50%, 
+                #FFE4C4 100%);
+            border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+            box-shadow: inset 0 10px 30px rgba(255, 200, 100, 0.3);
+        }
+
+        /* Wax drips */
+        .wax-drip {
+            position: absolute;
+            width: 20px;
+            background: linear-gradient(to bottom, #FFF8E7, #FFE4C4);
+            border-radius: 0 0 10px 10px;
+            opacity: 0.8;
+        }
+
+        .wax-drip:nth-child(1) { left: 35%; top: -15px; height: 30px; width: 15px; }
+        .wax-drip:nth-child(2) { left: 48%; top: -25px; height: 40px; width: 18px; }
+        .wax-drip:nth-child(3) { right: 35%; top: -20px; height: 35px; width: 16px; }
+        .wax-drip:nth-child(4) { left: 42%; top: -10px; height: 20px; width: 12px; }
+        .wax-drip:nth-child(5) { right: 42%; top: -18px; height: 28px; width: 14px; }
+
+        /* Wax texture */
+        .wax-texture {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 30% 40%, rgba(255, 235, 205, 0.5) 2px, transparent 2px),
+                radial-gradient(circle at 70% 60%, rgba(255, 228, 196, 0.4) 3px, transparent 3px),
+                radial-gradient(circle at 50% 80%, rgba(255, 245, 220, 0.6) 2.5px, transparent 2.5px);
+            background-size: 100px 100px, 150px 150px, 120px 120px;
+        }
+
+        .sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .sparkle {
+            position: absolute;
+            font-size: 12px;
+            animation: twinkle 2.5s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 0.8; transform: scale(1) rotate(180deg); }
+        }
+
+        .sparkle:nth-child(1) { top: 25%; left: 30%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 35%; right: 25%; animation-delay: 0.7s; }
+        .sparkle:nth-child(3) { top: 20%; left: 20%; animation-delay: 1.2s; }
+        .sparkle:nth-child(4) { top: 28%; right: 35%; animation-delay: 1.8s; }
+
+        /* BACK SIDE - Message */
+        .postcard-back {
+            background: #FFF9F0;
+            transform: rotateY(180deg);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 12px solid #8B4513;
+            border-style: double;
+        }
+
+        .postcard-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .postcard-header h1 {
+            font-size: 2.2em;
+            color: #8B4513;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .postcard-header .subtitle {
+            font-size: 1em;
+            color: #A0522D;
+            font-style: italic;
+        }
+
+        .message-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 1em;
+            line-height: 1.7;
+            color: #3E2723;
+        }
+
+        .message-content p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .highlight {
+            color: #8B4513;
+            font-weight: 600;
+        }
+
+        .postcard-footer {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 2px solid #D2B48C;
+            text-align: center;
+        }
+
+        .wish-box {
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+            color: #FFF9F0;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-size: 0.95em;
+            line-height: 1.6;
+            box-shadow: 0 4px 10px rgba(139, 69, 19, 0.3);
+        }
+
+        .signature {
+            margin-top: 10px;
+            font-style: italic;
+            color: #5D4037;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .stamp {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 50px;
+            height: 50px;
+            background: #DC143C;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            border: 3px dashed rgba(255,255,255,0.5);
+            transform: rotate(15deg);
+            font-weight: bold;
+        }
+
+        /* Big Confetti on Flip - From Sides */
+        .big-confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+        }
+
+        .big-confetti-container.active {
+            animation: showBigConfetti 0.1s forwards;
+        }
+
+        @keyframes showBigConfetti {
+            to { opacity: 1; }
+        }
+
+        .big-confetti {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: bigConfettiExplode 2s ease-out forwards;
+        }
+
+        @keyframes bigConfettiExplode {
+            0% { 
+                opacity: 1;
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            100% { 
+                opacity: 0;
+                transform: translate(var(--x-end), var(--y-end)) rotate(720deg) scale(0.3);
+            }
+        }
+
+        /* Left side confetti */
+        .big-confetti.from-left {
+            left: 0;
+            top: 50%;
+        }
+
+        /* Right side confetti */
+        .big-confetti.from-right {
+            right: 0;
+            top: 50%;
+        }
+
+        @media (max-width: 768px) {
+            .countdown {
+                font-size: 2em;
+            }
+
+            .postcard-back {
+                padding: 20px;
+            }
+
+            .postcard-header h1 {
+                font-size: 1.8em;
+            }
+
+            .message-content {
+                font-size: 0.9em;
+            }
+
+            .flame {
+                width: 45px;
+                height: 70px;
+            }
+
+            .stamp {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1em;
+            }
+
+            .gift-box {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .countdown {
+                font-size: 1.6em;
+            }
+
+            .postcard-back {
+                padding: 15px;
+            }
+
+            .postcard-header h1 {
+                font-size: 1.5em;
+            }
+
+            .message-content {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Countdown -->
+    <div class="countdown" id="countdown">Blow in 5 seconds</div>
+
+    <!-- Background Gentle Confetti -->
+    <div class="bg-confetti"></div>
+    <div class="bg-confetti"></div>
+    <div class="bg-confetti"></div>
+    <div class="bg-confetti"></div>
+    <div class="bg-confetti"></div>
+    <div class="bg-confetti"></div>
+    <div class="bg-confetti"></div>
+    <div class="bg-confetti"></div>
+    <div class="bg-confetti"></div>
+    <div class="bg-confetti"></div>
+
+    <!-- Floating Gift Boxes -->
+    <div class="gift-box">🎁</div>
+    <div class="gift-box">🎁</div>
+    <div class="gift-box">🎁</div>
+    <div class="gift-box">🎁</div>
+
+    <!-- Party String Lights -->
+    <div class="string-lights">
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+    </div>
+
+    <!-- Big Confetti on Flip -->
+    <div class="big-confetti-container" id="bigConfettiContainer"></div>
+
+    <div class="postcard-wrapper">
+        <div class="postcard-container" id="postcardContainer">
+            <!-- FRONT SIDE - Candle -->
+            <div class="postcard-side postcard-front">
+                <div class="flame"></div>
+
+                <div class="flame-reflection"></div>
+
+                <div class="sparkles">
+                    <div class="sparkle">✨</div>
+                    <div class="sparkle">✨</div>
+                    <div class="sparkle">✨</div>
+                    <div class="sparkle">✨</div>
+                </div>
+
+                <div class="wax-field">
+                    <div class="wax-drip"></div>
+                    <div class="wax-drip"></div>
+                    <div class="wax-drip"></div>
+                    <div class="wax-drip"></div>
+                    <div class="wax-drip"></div>
+                    <div class="wax-texture"></div>
+                </div>
+            </div>
+
+            <!-- BACK SIDE - Message -->
+            <div class="postcard-side postcard-back">
+                <div class="stamp">🎂</div>
+
+                <div class="postcard-header">
+                    <h1>Happy Birthday!</h1>
+                    <div class="subtitle">A Special Day for Someone Special</div>
+                </div>
+
+                <div class="message-content">
+                    <p>Today marks another beautiful chapter in your journey. May it be filled with everything that brings you <span class="highlight">joy and warmth</span>.</p>
+
+                    <div class="wish-box">
+                        Here's to celebrating you! May the year ahead bring new adventures, meaningful moments, and countless reasons to smile. ✨
+                    </div>
+
+                    <p>Wishing you a day as wonderful as you are, and a year filled with <span class="highlight">happiness and success</span>.</p>
+                </div>
+
+                <div class="postcard-footer">
+                    <div class="signature">Pathik S. Rakholiya ❤️</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Countdown logic
+        let count = 5;
+        const countdownEl = document.getElementById('countdown');
+        const postcardContainer = document.getElementById('postcardContainer');
+        const bigConfettiContainer = document.getElementById('bigConfettiContainer');
+        const body = document.body;
+
+        const countdownInterval = setInterval(() => {
+            count--;
+            if (count > 0) {
+                countdownEl.textContent = `Blow in ${count} second${count !== 1 ? 's' : ''}`;
+            } else {
+                clearInterval(countdownInterval);
+                countdownEl.classList.add('hidden');
+
+                // Blow out candle - darken background
+                setTimeout(() => {
+                    body.classList.add('blown');
+                }, 300);
+
+                // Flip card
+                setTimeout(() => {
+                    postcardContainer.classList.add('flip');
+                }, 500);
+
+                // Trigger big confetti
+                setTimeout(() => {
+                    createBigConfetti();
+                }, 500);
+            }
+        }, 1000);
+
+        function createBigConfetti() {
+            bigConfettiContainer.classList.add('active');
+
+            const colors = [
+                '#FF6B6B', '#4ECDC4', '#FFE66D', '#95E1D3', '#F38181',
+                '#AA96DA', '#FCBAD3', '#A8E6CF', '#FFD3B6', '#FF8B94',
+                '#A8D8EA', '#FFAAA5', '#B4F8C8', '#FBE7C6', '#C7CEEA'
+            ];
+
+            // Create confetti from left side
+            for (let i = 0; i < 15; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'big-confetti from-left';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.top = `${20 + Math.random() * 60}%`;
+                confetti.style.setProperty('--x-end', `${300 + Math.random() * 400}px`);
+                confetti.style.setProperty('--y-end', `${-200 + Math.random() * 400}px`);
+                confetti.style.animationDelay = `${Math.random() * 0.3}s`;
+                bigConfettiContainer.appendChild(confetti);
+            }
+
+            // Create confetti from right side
+            for (let i = 0; i < 15; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'big-confetti from-right';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.top = `${20 + Math.random() * 60}%`;
+                confetti.style.setProperty('--x-end', `${-300 - Math.random() * 400}px`);
+                confetti.style.setProperty('--y-end', `${-200 + Math.random() * 400}px`);
+                confetti.style.animationDelay = `${Math.random() * 0.3}s`;
+                bigConfettiContainer.appendChild(confetti);
+            }
+        }
+    </script>
+</body>
+</html>
