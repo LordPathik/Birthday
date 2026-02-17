@@ -19,16 +19,22 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            perspective: 1000px;
         }
         
-        .postcard-container {
+        .postcard-wrapper {
+            perspective: 1500px;
             width: 100%;
             max-width: 700px;
             aspect-ratio: 3/2;
             max-height: 90vh;
+        }
+        
+        .postcard-container {
+            width: 100%;
+            height: 100%;
             position: relative;
             transform-style: preserve-3d;
+            transition: transform 1s ease-in-out;
             animation: flipCard 1s ease-in-out 3s forwards;
         }
         
@@ -49,26 +55,35 @@
         
         /* FRONT SIDE - Picture */
         .postcard-front {
-            background: linear-gradient(to top, #E8F4F8 0%, #FFE5B4 30%, #FFB347 50%, #87CEEB 100%);
+            background: linear-gradient(to top, #E8F4F8 0%, #FFE5B4 30%, #FFA07A 45%, #FF7F50 50%, #87CEEB 100%);
             position: relative;
         }
         
+        /* Realistic Sun */
         .sun {
             position: absolute;
-            top: 15%;
+            top: 18%;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, #FFF4E6 0%, #FFD700 40%, #FF8C00 100%);
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, #FFF8DC 0%, #FFE87C 25%, #FFD700 45%, #FFA500 70%, #FF8C00 100%);
             border-radius: 50%;
-            box-shadow: 0 0 60px rgba(255, 215, 0, 0.6);
-            animation: sunRise 2s ease-out;
+            box-shadow: 
+                0 0 40px rgba(255, 215, 0, 0.8),
+                0 0 80px rgba(255, 165, 0, 0.5),
+                inset -10px -10px 30px rgba(255, 140, 0, 0.3);
+            animation: sunRise 2s ease-out, sunGlow 3s ease-in-out infinite;
         }
         
         @keyframes sunRise {
-            from { top: 40%; opacity: 0; }
-            to { top: 15%; opacity: 1; }
+            from { top: 45%; opacity: 0; }
+            to { top: 18%; opacity: 1; }
+        }
+        
+        @keyframes sunGlow {
+            0%, 100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 0 80px rgba(255, 165, 0, 0.5), inset -10px -10px 30px rgba(255, 140, 0, 0.3); }
+            50% { box-shadow: 0 0 60px rgba(255, 215, 0, 1), 0 0 100px rgba(255, 165, 0, 0.7), inset -10px -10px 30px rgba(255, 140, 0, 0.3); }
         }
         
         .sun-rays {
@@ -78,10 +93,10 @@
             width: 100%;
             height: 100%;
             transform: translate(-50%, -50%);
-            animation: rotate 20s linear infinite;
+            animation: rotateRays 30s linear infinite;
         }
         
-        @keyframes rotate {
+        @keyframes rotateRays {
             from { transform: translate(-50%, -50%) rotate(0deg); }
             to { transform: translate(-50%, -50%) rotate(360deg); }
         }
@@ -90,20 +105,37 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 3px;
-            height: 80px;
-            background: linear-gradient(to bottom, rgba(255, 215, 0, 0.4), transparent);
+            width: 2px;
+            height: 70px;
+            background: linear-gradient(to bottom, rgba(255, 223, 0, 0.6), rgba(255, 223, 0, 0) 70%);
             transform-origin: top center;
         }
         
-        .ray:nth-child(1) { transform: rotate(0deg) translateY(-60px); }
-        .ray:nth-child(2) { transform: rotate(45deg) translateY(-60px); }
-        .ray:nth-child(3) { transform: rotate(90deg) translateY(-60px); }
-        .ray:nth-child(4) { transform: rotate(135deg) translateY(-60px); }
-        .ray:nth-child(5) { transform: rotate(180deg) translateY(-60px); }
-        .ray:nth-child(6) { transform: rotate(225deg) translateY(-60px); }
-        .ray:nth-child(7) { transform: rotate(270deg) translateY(-60px); }
-        .ray:nth-child(8) { transform: rotate(315deg) translateY(-60px); }
+        .ray:nth-child(1) { transform: rotate(0deg) translateY(-50px); }
+        .ray:nth-child(2) { transform: rotate(30deg) translateY(-50px); }
+        .ray:nth-child(3) { transform: rotate(60deg) translateY(-50px); }
+        .ray:nth-child(4) { transform: rotate(90deg) translateY(-50px); }
+        .ray:nth-child(5) { transform: rotate(120deg) translateY(-50px); }
+        .ray:nth-child(6) { transform: rotate(150deg) translateY(-50px); }
+        .ray:nth-child(7) { transform: rotate(180deg) translateY(-50px); }
+        .ray:nth-child(8) { transform: rotate(210deg) translateY(-50px); }
+        .ray:nth-child(9) { transform: rotate(240deg) translateY(-50px); }
+        .ray:nth-child(10) { transform: rotate(270deg) translateY(-50px); }
+        .ray:nth-child(11) { transform: rotate(300deg) translateY(-50px); }
+        .ray:nth-child(12) { transform: rotate(330deg) translateY(-50px); }
+        
+        /* Sun reflection on snow */
+        .sun-reflection {
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 120px;
+            background: linear-gradient(to bottom, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0) 90%);
+            filter: blur(20px);
+            opacity: 0.6;
+        }
         
         .snow-field {
             position: absolute;
@@ -111,7 +143,7 @@
             left: 0;
             right: 0;
             height: 45%;
-            background: linear-gradient(to bottom, #F0F8FF 0%, #E6F3FF 50%, #FFFFFF 100%);
+            background: linear-gradient(to bottom, #F0F8FF 0%, #E8F4FF 30%, #FFFFFF 100%);
             border-radius: 50% 50% 0 0 / 20% 20% 0 0;
         }
         
@@ -120,11 +152,36 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.8) 2px, transparent 2px),
-                radial-gradient(circle at 60% 70%, rgba(255,255,255,0.6) 3px, transparent 3px),
-                radial-gradient(circle at 80% 40%, rgba(255,255,255,0.7) 2px, transparent 2px),
-                radial-gradient(circle at 40% 80%, rgba(230,240,255,0.5) 4px, transparent 4px);
-            background-size: 100px 100px, 150px 150px, 120px 120px, 180px 180px;
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.9) 1.5px, transparent 1.5px),
+                radial-gradient(circle at 60% 70%, rgba(230,240,255,0.7) 2px, transparent 2px),
+                radial-gradient(circle at 80% 40%, rgba(255,255,255,0.8) 1px, transparent 1px),
+                radial-gradient(circle at 40% 80%, rgba(220,235,255,0.6) 2.5px, transparent 2.5px),
+                radial-gradient(circle at 15% 60%, rgba(255,255,255,0.7) 1.5px, transparent 1.5px);
+            background-size: 80px 80px, 120px 120px, 100px 100px, 150px 150px, 90px 90px;
+        }
+        
+        /* "Happy Birthday" text on snow */
+        .snow-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Georgia', serif;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #4A90E2;
+            text-shadow: 
+                2px 2px 4px rgba(255, 255, 255, 0.9),
+                -1px -1px 2px rgba(70, 130, 180, 0.4),
+                0 0 20px rgba(135, 206, 235, 0.6);
+            letter-spacing: 2px;
+            animation: fadeInText 1.5s ease-out 0.5s both;
+            z-index: 10;
+        }
+        
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translate(-50%, -30%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
         }
         
         .sparkles {
@@ -135,19 +192,21 @@
         
         .sparkle {
             position: absolute;
-            font-size: 12px;
-            animation: twinkle 2s ease-in-out infinite;
+            font-size: 14px;
+            animation: twinkle 2.5s ease-in-out infinite;
         }
         
         @keyframes twinkle {
-            0%, 100% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1); }
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
         }
         
-        .sparkle:nth-child(1) { top: 25%; left: 30%; animation-delay: 0s; }
-        .sparkle:nth-child(2) { top: 35%; right: 25%; animation-delay: 0.5s; }
-        .sparkle:nth-child(3) { top: 45%; left: 20%; animation-delay: 1s; }
-        .sparkle:nth-child(4) { top: 30%; right: 35%; animation-delay: 1.5s; }
+        .sparkle:nth-child(1) { top: 25%; left: 25%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 35%; right: 20%; animation-delay: 0.7s; }
+        .sparkle:nth-child(3) { top: 15%; left: 15%; animation-delay: 1.2s; }
+        .sparkle:nth-child(4) { top: 28%; right: 30%; animation-delay: 1.8s; }
+        .sparkle:nth-child(5) { top: 20%; left: 40%; animation-delay: 0.4s; }
+        .sparkle:nth-child(6) { top: 32%; right: 45%; animation-delay: 1.5s; }
         
         /* BACK SIDE - Message */
         .postcard-back {
@@ -255,8 +314,12 @@
             }
             
             .sun {
-                width: 80px;
-                height: 80px;
+                width: 70px;
+                height: 70px;
+            }
+            
+            .snow-text {
+                font-size: 1.8em;
             }
             
             .stamp {
@@ -278,59 +341,74 @@
             .message-content {
                 font-size: 0.85em;
             }
+            
+            .snow-text {
+                font-size: 1.4em;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="postcard-container">
-        <!-- FRONT SIDE - Picture -->
-        <div class="postcard-side postcard-front">
-            <div class="sun">
-                <div class="sun-rays">
-                    <div class="ray"></div>
-                    <div class="ray"></div>
-                    <div class="ray"></div>
-                    <div class="ray"></div>
-                    <div class="ray"></div>
-                    <div class="ray"></div>
-                    <div class="ray"></div>
-                    <div class="ray"></div>
+    <div class="postcard-wrapper">
+        <div class="postcard-container">
+            <!-- FRONT SIDE - Picture -->
+            <div class="postcard-side postcard-front">
+                <div class="sun">
+                    <div class="sun-rays">
+                        <div class="ray"></div>
+                        <div class="ray"></div>
+                        <div class="ray"></div>
+                        <div class="ray"></div>
+                        <div class="ray"></div>
+                        <div class="ray"></div>
+                        <div class="ray"></div>
+                        <div class="ray"></div>
+                        <div class="ray"></div>
+                        <div class="ray"></div>
+                        <div class="ray"></div>
+                        <div class="ray"></div>
+                    </div>
+                </div>
+                
+                <div class="sun-reflection"></div>
+                
+                <div class="sparkles">
+                    <div class="sparkle">✨</div>
+                    <div class="sparkle">✨</div>
+                    <div class="sparkle">✨</div>
+                    <div class="sparkle">✨</div>
+                    <div class="sparkle">✨</div>
+                    <div class="sparkle">✨</div>
+                </div>
+                
+                <div class="snow-field">
+                    <div class="snow-texture"></div>
+                    <div class="snow-text">Happy Birthday</div>
                 </div>
             </div>
             
-            <div class="sparkles">
-                <div class="sparkle">✨</div>
-                <div class="sparkle">✨</div>
-                <div class="sparkle">✨</div>
-                <div class="sparkle">✨</div>
-            </div>
-            
-            <div class="snow-field">
-                <div class="snow-texture"></div>
-            </div>
-        </div>
-        
-        <!-- BACK SIDE - Message -->
-        <div class="postcard-side postcard-back">
-            <div class="stamp">🎂</div>
-            
-            <div class="postcard-header">
-                <h1>Happy Birthday!</h1>
-                <div class="subtitle">A Special Day for Someone Special</div>
-            </div>
-            
-            <div class="message-content">
-                <p>Today marks another beautiful chapter in your journey. May it be filled with everything that brings you <span class="highlight">joy and warmth</span>.</p>
+            <!-- BACK SIDE - Message -->
+            <div class="postcard-side postcard-back">
+                <div class="stamp">🎂</div>
                 
-                <div class="wish-box">
-                    Here's to celebrating you! May the year ahead bring new adventures, meaningful moments, and countless reasons to smile. ✨
+                <div class="postcard-header">
+                    <h1>Happy Birthday!</h1>
+                    <div class="subtitle">A Special Day for Someone Special</div>
                 </div>
                 
-                <p>Wishing you a day as wonderful as you are, and a year filled with <span class="highlight">happiness and success</span>.</p>
-            </div>
-            
-            <div class="postcard-footer">
-                <div class="signature">With warmest wishes ❤️</div>
+                <div class="message-content">
+                    <p>Today marks another beautiful chapter in your journey. May it be filled with everything that brings you <span class="highlight">joy and warmth</span>.</p>
+                    
+                    <div class="wish-box">
+                        Here's to celebrating you! May the year ahead bring new adventures, meaningful moments, and countless reasons to smile. ✨
+                    </div>
+                    
+                    <p>Wishing you a day as wonderful as you are, and a year filled with <span class="highlight">happiness and success</span>.</p>
+                </div>
+                
+                <div class="postcard-footer">
+                    <div class="signature">With warmest wishes ❤️</div>
+                </div>
             </div>
         </div>
     </div>
