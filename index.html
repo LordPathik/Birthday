@@ -62,7 +62,7 @@
         /* Countdown */
         .countdown {
             position: fixed;
-            top: 15%;
+            top: 12%;
             left: 50%;
             transform: translateX(-50%);
             font-family: 'Dancing Script', cursive;
@@ -190,10 +190,10 @@
         .postcard-wrapper {
             perspective: 2000px;
             perspective-origin: center center;
-            width: 100%;
-            max-width: 700px;
-            aspect-ratio: 3/2;
-            max-height: 90vh;
+            width: 90%;
+            max-width: 600px;
+            aspect-ratio: 4/3;
+            max-height: 85vh;
             z-index: 10;
         }
 
@@ -373,28 +373,28 @@
         .postcard-back {
             background: #FFF9F0;
             transform: rotateY(180deg);
-            padding: 30px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            border: 12px solid #8B4513;
+            border: 10px solid #8B4513;
             border-style: double;
         }
 
         .postcard-header {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .postcard-header h1 {
-            font-size: 2.2em;
+            font-size: 1.8em;
             color: #8B4513;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             font-weight: 600;
         }
 
         .postcard-header .subtitle {
-            font-size: 1em;
+            font-size: 0.9em;
             color: #A0522D;
             font-style: italic;
         }
@@ -404,13 +404,13 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            font-size: 1em;
-            line-height: 1.7;
+            font-size: 0.9em;
+            line-height: 1.6;
             color: #3E2723;
         }
 
         .message-content p {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             text-align: justify;
         }
 
@@ -420,8 +420,8 @@
         }
 
         .postcard-footer {
-            margin-top: 15px;
-            padding-top: 12px;
+            margin-top: 10px;
+            padding-top: 10px;
             border-top: 2px solid #D2B48C;
             text-align: center;
         }
@@ -429,34 +429,34 @@
         .wish-box {
             background: linear-gradient(135deg, #8B4513, #A0522D);
             color: #FFF9F0;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 12px 0;
-            font-size: 0.95em;
-            line-height: 1.6;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-size: 0.85em;
+            line-height: 1.5;
             box-shadow: 0 4px 10px rgba(139, 69, 19, 0.3);
         }
 
         .signature {
-            margin-top: 10px;
+            margin-top: 8px;
             font-style: italic;
             color: #5D4037;
-            font-size: 1em;
+            font-size: 0.9em;
             font-weight: 600;
         }
 
         .stamp {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 50px;
-            height: 50px;
+            top: 12px;
+            right: 12px;
+            width: 45px;
+            height: 45px;
             background: #DC143C;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3em;
+            font-size: 1.2em;
             border: 3px dashed rgba(255,255,255,0.5);
             transform: rotate(15deg);
             font-weight: bold;
@@ -514,20 +514,47 @@
         }
 
         @media (max-width: 768px) {
+            .postcard-wrapper {
+                width: 95%;
+                aspect-ratio: 3/4;
+                max-height: 80vh;
+            }
+
             .countdown {
-                font-size: 2em;
+                font-size: 1.8em;
+                top: 8%;
             }
 
             .postcard-back {
-                padding: 20px;
+                padding: 15px;
+                border-width: 8px;
             }
 
             .postcard-header h1 {
-                font-size: 1.8em;
+                font-size: 1.5em;
+            }
+
+            .postcard-header .subtitle {
+                font-size: 0.8em;
             }
 
             .message-content {
-                font-size: 0.9em;
+                font-size: 0.75em;
+                line-height: 1.5;
+            }
+
+            .message-content p {
+                margin-bottom: 8px;
+            }
+
+            .wish-box {
+                padding: 8px;
+                margin: 8px 0;
+                font-size: 0.75em;
+            }
+
+            .signature {
+                font-size: 0.8em;
             }
 
             .flame {
@@ -536,31 +563,46 @@
             }
 
             .stamp {
-                width: 40px;
-                height: 40px;
-                font-size: 1.1em;
+                width: 35px;
+                height: 35px;
+                font-size: 1em;
+                top: 10px;
+                right: 10px;
             }
 
             .gift-box {
                 font-size: 20px;
             }
+
+            .light {
+                width: 8px;
+                height: 8px;
+            }
         }
 
         @media (max-width: 480px) {
+            .postcard-wrapper {
+                aspect-ratio: 2/3;
+            }
+
             .countdown {
-                font-size: 1.6em;
-            }
-
-            .postcard-back {
-                padding: 15px;
-            }
-
-            .postcard-header h1 {
                 font-size: 1.5em;
             }
 
+            .postcard-back {
+                padding: 12px;
+            }
+
+            .postcard-header h1 {
+                font-size: 1.3em;
+            }
+
             .message-content {
-                font-size: 0.8em;
+                font-size: 0.7em;
+            }
+
+            .wish-box {
+                font-size: 0.7em;
             }
         }
     </style>
