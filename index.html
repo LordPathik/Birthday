@@ -518,7 +518,7 @@
             .postcard-wrapper {
                 width: 95%;
                 aspect-ratio: 3/4;
-                max-height: 75vh;
+                max-height: 78vh;
             }
 
             .countdown {
@@ -527,49 +527,50 @@
             }
 
             .postcard-back {
-                padding: 16px;
+                padding: 18px 16px;
                 border-width: 8px;
                 justify-content: flex-start;
+                gap: 0;
             }
 
             .postcard-header {
-                margin-bottom: 8px;
+                margin-bottom: 10px;
             }
 
             .postcard-header h1 {
-                font-size: 1.5em;
-                margin-bottom: 2px;
+                font-size: 1.6em;
+                margin-bottom: 3px;
             }
 
             .postcard-header .subtitle {
-                font-size: 0.75em;
+                font-size: 0.8em;
             }
 
             .message-content {
-                flex: 0;
+                flex: none;
                 justify-content: flex-start;
+                font-size: 0.8em;
+                line-height: 1.5;
+            }
+
+            .message-content p {
+                margin-bottom: 8px;
+            }
+
+            .wish-box {
+                padding: 8px;
+                margin: 8px 0;
                 font-size: 0.75em;
                 line-height: 1.45;
             }
 
-            .message-content p {
-                margin-bottom: 7px;
-            }
-
-            .wish-box {
-                padding: 7px;
-                margin: 7px 0;
-                font-size: 0.72em;
-                line-height: 1.4;
-            }
-
             .postcard-footer {
-                margin-top: 8px;
-                padding-top: 7px;
+                margin-top: 10px;
+                padding-top: 8px;
             }
 
             .signature {
-                font-size: 0.75em;
+                font-size: 0.8em;
                 margin-top: 5px;
             }
 
@@ -599,7 +600,7 @@
         @media (max-width: 480px) {
             .postcard-wrapper {
                 aspect-ratio: 2/3;
-                max-height: 70vh;
+                max-height: 75vh;
             }
 
             .countdown {
@@ -607,27 +608,29 @@
             }
 
             .postcard-back {
-                padding: 14px;
+                padding: 16px 14px;
             }
 
             .postcard-header h1 {
-                font-size: 1.3em;
+                font-size: 1.4em;
             }
 
             .postcard-header .subtitle {
-                font-size: 0.7em;
+                font-size: 0.75em;
             }
 
             .message-content {
-                font-size: 0.7em;
+                font-size: 0.75em;
             }
 
             .wish-box {
-                font-size: 0.68em;
+                font-size: 0.72em;
+                padding: 7px;
+                margin: 7px 0;
             }
 
             .signature {
-                font-size: 0.7em;
+                font-size: 0.75em;
             }
         }
     </style>
